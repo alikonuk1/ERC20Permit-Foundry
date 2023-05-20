@@ -7,8 +7,7 @@ import "../src/PermitFoundry.sol";
 contract PermitFoundryTest is Test {
     PermitFoundry public permitFoundry;
     /// Mainnet address for the USDC token contract.
-    address public constant USDC =
-        0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF;
+    address public constant USDC = 0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF;
     // Create an instance of the ERC20 interface for the USDC token.
     IERC20 internal constant usdc = IERC20(USDC);
     // Create an instance of the ERC20Permit interface for the USDC token.
@@ -47,16 +46,18 @@ contract PermitFoundryTest is Test {
         // The `DOMAIN_SEPARATOR` is a value that prevents replay attacks across different domains.
         bytes32 permitHash = keccak256(
             abi.encodePacked(
-                '\x19\x01',
+                "\x19\x01",
                 usdcPermit.DOMAIN_SEPARATOR(),
-                keccak256(abi.encode(keccak256
-                    ("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"), 
-                    address(alice), // Owners address
-                    address(permitFoundry), // Spenders address
-                    3 * 10e6, // Amount to spend
-                    usdcPermit.nonces(address(alice)), // Nonce
-                    (block.timestamp + 60) // Deadline
-                ))
+                keccak256(
+                    abi.encode(
+                        keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"),
+                        address(alice), // Owners address
+                        address(permitFoundry), // Spenders address
+                        3 * 10e6, // Amount to spend
+                        usdcPermit.nonces(address(alice)), // Nonce
+                        (block.timestamp + 60) // Deadline
+                    )
+                )
             )
         );
 
